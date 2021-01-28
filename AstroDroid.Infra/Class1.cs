@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AstroDroid.Infra
+﻿namespace AstroDroid.Infra
 {
     public class Class1
     {

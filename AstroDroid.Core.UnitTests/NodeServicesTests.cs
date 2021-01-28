@@ -1,6 +1,8 @@
+using System;
+using Ardalis.GuardClauses;
+using AstroDroid.Core.Interfaces;
+using AstroDroid.Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AstroDroid.Core;
-using Guards;
 
 namespace AstroDroid.Core.UnitTests
 {
@@ -10,19 +12,20 @@ namespace AstroDroid.Core.UnitTests
         public object Content { get; set; }
         public string Topic { get; set; }
         public string Sender { get; set; } = "me";
-
     }
 
     public class SenderNode : INodeService
     {
-        IMessageService _messageService;
+        private readonly IMessageService _messageService;
+
         public SenderNode(IMessageService messageService)
         {
-            Guard.ArgumentNotNull(() => messageService);
+            Guard.Against.Null(messageService, nameof(messageService));
             _messageService = messageService;
         }
 
         public string NodeId { get; set; }
+
         public void Setup()
         {
             NodeId = "Sender";
@@ -30,37 +33,47 @@ namespace AstroDroid.Core.UnitTests
 
         public void Update()
         {
-            var message = new TestMessage
-            {
-                Topic = "Test",
-                Content = "Test",
-                Sender = "Topic 1"
-            };
+        }
+
+        public void ReceiveMessage(INodeMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendMessage(INodeMessage message)
+        {
+            message.Sender = NodeId;
             _messageService.SendMessage(message);
         }
     }
 
     public class ReceiverNode : INodeService
     {
-        IMessageService _messageService;
-        public ReceiverNode(IMessageService messageService)
-        {
-            Guard.ArgumentNotNull(() => messageService);
-            _messageService = messageService;
-        }
-
-        public string NodeId { get; set; }
-        public void Setup()
-        {
-            NodeId = "Receiver";
-        }
+        private readonly IMessageService _messageService;
 
         public string MyOutput;
 
+        public ReceiverNode(IMessageService messageService)
+        {
+            _messageService = messageService;
+            Guard.Against.Null(messageService, nameof(messageService));
+        }
+
+        public string NodeId { get; set; }
+
+        public void Setup()
+        {
+            NodeId = "Receiver";
+            _messageService.Subscribe("Test", this);
+        }
+
         public void Update()
         {
-            var message = _messageService.ReceiveMessage();
-            this.MyOutput = (string)message.Content;
+        }
+
+        public void ReceiveMessage(INodeMessage message)
+        {
+            MyOutput = (string) message.Content;
         }
     }
 
@@ -68,26 +81,55 @@ namespace AstroDroid.Core.UnitTests
     [TestClass]
     public class NodeServicesTests
     {
-        [TestInitialize()]
+        [TestInitialize]
         public void TestSetup()
         {
-
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void MessageService__ReceiveOfMessageShouldWork()
         {
             // arrange 
 
             // Create sender node
+            IMessageService messageService = new MessageService();
+            var senderService = new SenderNode(messageService);
+            senderService.Setup();
 
             // Create receiver node 
+            var receiverService = new ReceiverNode(messageService);
+            receiverService.Setup();
 
             // act
-            // Let's have the sender send a message 
+            senderService.SendMessage(new TestMessage
+            {
+                Content = "My cool content", Sender = "Test", Topic = "Test"
+            });
 
             // assert 
-            // Let's see if the receiver gets a message
+            Assert.AreEqual(receiverService.MyOutput, "My cool content");
+        }
+
+        [TestMethod]
+        public void MessageService__SendBadMessage__HandleNoTopic()
+        {
+            // arrange 
+            // Create sender node
+            IMessageService messageService = new MessageService();
+            var message = GetGoodMessage();
+            message.Topic = "";
+
+            var response = messageService.SendMessage(message);
+            Assert.IsTrue(response.ValidationErrors.Count > 0);
+        }
+
+        private static INodeMessage GetGoodMessage()
+        {
+            INodeMessage message = new TestMessage();
+            message.Sender = "NodeId";
+            message.Topic = "SomeTopic";
+            message.Type = "MyType";
+            return message;
         }
     }
 }

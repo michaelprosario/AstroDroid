@@ -1,9 +1,10 @@
-using System;
-
-public interface INodeMessage
+namespace AstroDroid.Core.Interfaces
 {
-    string Type { get; set; }
-    object Content { get; set; }
-    string Topic { get; set; }
-    string Sender { get; set; }
+    public interface INodeMessage
+    {
+        string Type { get; set; }
+        object Content { get; set; }
+        string Topic { get; set; }
+        string Sender { get; set; }
+    }
 }

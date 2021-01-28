@@ -1,6 +1,10 @@
-public interface INodeService
+namespace AstroDroid.Core.Interfaces
 {
-    string NodeId { get; set; }
-    void Setup();
-    void Update();
+    public interface INodeService
+    {
+        string NodeId { get; set; }
+        void Setup();
+        void Update();
+        void ReceiveMessage(INodeMessage message);
+    }
 }
