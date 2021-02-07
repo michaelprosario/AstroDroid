@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "generate-barrels": "barrelsby --delete"
+  },  
   "name": "astro-droid-js-core",
   "version": "1.0.0",
   "description": "",
@@ -6,5 +9,8 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "fluent-ts-validator": "^3.0.2"
+  },
+  "devDependencies": {
+    "barrelsby": "^2.2.0"
   }
 }
