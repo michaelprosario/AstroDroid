@@ -1,0 +1,10 @@
+{
+  "name": "astro-droid-js-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "fluent-ts-validator": "^3.0.2"
+  }
+}
