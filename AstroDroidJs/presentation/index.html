@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.2.0/dist/aframe-environment-component.min.js"></script>
+    <script src="../components/bot-user-input.js"></script>
+    <script>
+    function onMoveForward(obj){      
+      obj.emit("OnMoveCommand", { moveRequest: "forward" }, true );
+    }
+
+    function onMoveBack(obj){
+      obj.emit("OnMoveCommand", { moveRequest: "back" }, true );
+    }
+
+    function onMoveLeft(obj){
+      obj.emit("OnMoveCommand", { moveRequest: "left" }, true );
+    }
+
+    function onMoveRight(obj){
+      obj.emit("OnMoveCommand", { moveRequest: "right" }, true );
+    }
+
+    // #https://stackoverflow.com/questions/46052476/can-a-keyboard-event-be-captured-on-an-aframe-entity
+    document.addEventListener('keydown', function(event) {
+      document.querySelectorAll('.listenonkey').forEach(function(obj){
+        switch(event.key){
+          case 'i': onMoveForward(obj); break;
+          case 'j': onMoveLeft(obj); break;
+          case 'k': onMoveBack(obj); break;
+          case 'l': onMoveRight(obj); break;
+        }
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-box position="0 0.2 -5" scale="1 0.25 3" rotation="0 0 0" color="#4CC3D9"></a-box>
+      
+      <a-entity environment="preset: forest"></a-entity>
+      <a-entity class='listenonkey' bot-user-input></a-entity>
+    </a-scene>
+  </body>
+</html>

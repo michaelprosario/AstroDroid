@@ -10,6 +10,12 @@ import { Require } from "../helpers/requires";
 export class MessageService implements IMessageService {
     public Subscribers: Subscriber[] = [];
 
+    debugLog(area: string,entry: any){
+        Require.IsNotEmpty(area,"area");
+        Require.NotNull(entry,"entry");
+        console.log(area, entry);
+    }
+
     public SendMessage(message: INodeMessage): Response {
         var messageValidator = new MessageValidator();
         var validationResults = messageValidator.validate(message);
@@ -18,9 +24,11 @@ export class MessageService implements IMessageService {
             validationResponse.Code = ResponseCode.BadRequest;
             validationResponse.Message = "Validation errors on message";
             validationResponse.ValidationErrors = validationResults.getFailures();
+            this.debugLog("SendMessageError", validationResults );
             return validationResponse;
         }
 
+        this.debugLog("SendMessage", message );
         var topic = message.Topic;
         var subscribers = this.Subscribers.filter(s => s.Topic === topic);
         for (let subscriber of subscribers)
@@ -41,6 +49,7 @@ export class MessageService implements IMessageService {
         subscriber.Topic = topic;
         subscriber.NodeService = service;
         this.Subscribers.push(subscriber);
+        this.debugLog("Subscribe", this.Subscribers );
     }
 
     public Unsubscribe(topic: string, service: INodeService) {
@@ -54,5 +63,6 @@ export class MessageService implements IMessageService {
         if (index > -1) {
             this.Subscribers.splice(index, 1);
         }
+        this.debugLog("Unsubscribe", this.Subscribers );
     }
 }
