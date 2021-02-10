@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
     "outDir": "public/js",
     "rootDir": "src",
+    "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types"],
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules"
+  ]
 }

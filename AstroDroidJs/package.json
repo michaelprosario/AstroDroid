@@ -4,6 +4,7 @@
   "description": "In this early design, we are creating a simple model of the following robot: https://www.makeblock.com/mbot. At present, we will try to model the node in AFrame using a AFrame component.  The Aframe component will have a node associated with it.",
   "main": "index.js",
   "dependencies": {
+    "@types/aframe": "^1.0.3",
     "astro-droid-js-core": "^1.0.0",
     "fluent-ts-validator": "^3.0.2"
   },
