@@ -1,7 +1,7 @@
 {
   "scripts": {
     "generate-barrels": "barrelsby --delete"
-  },  
+  },
   "name": "astro-droid-js-core",
   "version": "1.0.0",
   "description": "",

@@ -10,13 +10,7 @@ export class BotUserInputComponent extends ComponentWrapper<BotUserInputSchema> 
     }
 
     init() {
-        const entityColor = this.el.getAttribute("color")
-        EntityBuilder.create("a-text", {
-            id: "color-text",
-            value: entityColor || this.data.color,
-            color: entityColor || "black",
-            position: "-1 1.25 0",
-        }).attachTo(this.el)
+
     }
 
     tick() {

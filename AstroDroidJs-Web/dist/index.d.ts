@@ -1,8 +1,7 @@
 import { ComponentWrapper } from "aframe-typescript-toolkit";
-interface ColorComponentSchema {
-    readonly color: string;
+interface BotUserInputSchema {
 }
-export declare class ColorComponent extends ComponentWrapper<ColorComponentSchema> {
+export declare class BotUserInputComponent extends ComponentWrapper<BotUserInputSchema> {
     constructor();
     init(): void;
     tick(): void;

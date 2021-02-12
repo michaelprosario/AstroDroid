@@ -1,7 +1,7 @@
 
 import { IMessageService } from "../interfaces/message-service";
 import { INodeMessage } from "../interfaces/node-message";
-import { INodeService } from "../interfaces/node-service";
+import { INode } from "../interfaces/node";
 import { MessageValidator } from "../validators/message-validator";
 import { ResponseCode, Response } from "../responses/response";
 import { Subscriber } from "../entities/subscriber";
@@ -32,33 +32,33 @@ export class MessageService implements IMessageService {
         var topic = message.Topic;
         var subscribers = this.Subscribers.filter(s => s.Topic === topic);
         for (let subscriber of subscribers)
-            subscriber.NodeService.ReceiveMessage(message);
+            subscriber.Node.ReceiveMessage(message);
 
         return new Response();
     }
 
-    public Subscribe(topic: string, service: INodeService) {
+    public Subscribe(topic: string, service: INode) {
         Require.IsNotEmpty(topic, "topic");
         Require.NotNull(service, "service");
 
-        var collection = this.Subscribers.filter(r => r.Topic === topic && r.NodeService.NodeId === service.NodeId);
+        var collection = this.Subscribers.filter(r => r.Topic === topic && r.Node.NodeId === service.NodeId);
         if (collection.length > 0)
             return;
 
         let subscriber = new Subscriber();
         subscriber.Topic = topic;
-        subscriber.NodeService = service;
+        subscriber.Node = service;
         this.Subscribers.push(subscriber);
         this.debugLog("Subscribe", this.Subscribers );
     }
 
-    public Unsubscribe(topic: string, service: INodeService) {
+    public Unsubscribe(topic: string, service: INode) {
         Require.IsNotEmpty(topic, "topic");
         Require.NotNull(service, "service");
 
         var subscriber =
             this.Subscribers.find(r => r.Topic === topic &&
-                r.NodeService.NodeId === service.NodeId);
+                r.Node.NodeId === service.NodeId);
         const index = this.Subscribers.indexOf(subscriber);
         if (index > -1) {
             this.Subscribers.splice(index, 1);
