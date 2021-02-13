@@ -1,31 +1,36 @@
-import { ComponentWrapper } from "aframe-typescript-toolkit"
-import { MessageService } from "astro-droid-js-core";
-import { DriverNode } from "./nodes/driver-node"
-
-interface BotDriverSchema {    
-}
-
-let messageService = new MessageService();
-
-export class BotDriverComponent extends ComponentWrapper<BotDriverSchema> {
-  
-    driverNode : DriverNode;
-    constructor() {
-        super("bot-driver", {})
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var aframe_typescript_toolkit_1 = require("aframe-typescript-toolkit");
+var astro_droid_js_core_1 = require("astro-droid-js-core");
+var driver_node_1 = require("./nodes/driver-node");
+var messageService = new astro_droid_js_core_1.MessageService();
+var BotDriverComponent = /** @class */ (function (_super) {
+    __extends(BotDriverComponent, _super);
+    function BotDriverComponent() {
+        return _super.call(this, "bot-driver", {}) || this;
     }
-
-    init() {            
-      this.driverNode = new DriverNode(messageService);
-    }
-
-    tick() {
-        
-    }
-}
-
-new BotDriverComponent().register()
-
-
+    BotDriverComponent.prototype.init = function () {
+        this.driverNode = new driver_node_1.DriverNode(messageService);
+    };
+    BotDriverComponent.prototype.tick = function () {
+    };
+    return BotDriverComponent;
+}(aframe_typescript_toolkit_1.ComponentWrapper));
+exports.BotDriverComponent = BotDriverComponent;
+new BotDriverComponent().register();
 /*
 
 import { MessageService, INodeService, IMessageService, INodeMessage } from "astro-droid-js-core";
@@ -99,4 +104,5 @@ AFRAME.registerComponent('bot-user-input', {
   },
 
 });
-*/
+*/ 
+//# sourceMappingURL=index.js.map

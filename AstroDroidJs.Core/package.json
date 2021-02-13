@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "generate-barrels": "barrelsby --delete"
+    "update-index": "barrelsby --delete --exclude ./node_modules/* --exclude ./src/*"
   },
   "name": "astro-droid-js-core",
   "version": "1.0.0",
