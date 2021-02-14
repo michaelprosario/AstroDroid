@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Ardalis.GuardClauses;
 using AstroDroid.Core.Entities;
 using AstroDroid.Core.Interfaces;
 using AstroDroid.Core.Responses;
+using AstroDroid.Core.Utils;
 using AstroDroid.Core.Validators;
 
 namespace AstroDroid.Core.Services
@@ -32,8 +32,8 @@ namespace AstroDroid.Core.Services
 
         public void Subscribe(string topic, INodeService service)
         {
-            Guard.Against.NullOrEmpty(topic, nameof(topic));
-            Guard.Against.Null(service, nameof(service));
+            Require.NotNullOrEmpty(topic, nameof(topic));
+            Require.ObjectNotNull(service, nameof(service));
 
             var count = Subscribers
                 .Count(r => r.Topic.Equals(topic) && r.NodeService.NodeId.Equals(service.NodeId));

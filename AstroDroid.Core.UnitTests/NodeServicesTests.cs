@@ -1,7 +1,7 @@
 using System;
-using Ardalis.GuardClauses;
 using AstroDroid.Core.Interfaces;
 using AstroDroid.Core.Services;
+using AstroDroid.Core.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AstroDroid.Core.UnitTests
@@ -20,7 +20,7 @@ namespace AstroDroid.Core.UnitTests
 
         public SenderNode(IMessageService messageService)
         {
-            Guard.Against.Null(messageService, nameof(messageService));
+            Require.ObjectNotNull(messageService, nameof(messageService));
             _messageService = messageService;
         }
 
@@ -55,8 +55,8 @@ namespace AstroDroid.Core.UnitTests
 
         public ReceiverNode(IMessageService messageService)
         {
+            Require.ObjectNotNull(messageService, nameof(messageService));
             _messageService = messageService;
-            Guard.Against.Null(messageService, nameof(messageService));
         }
 
         public string NodeId { get; set; }
@@ -74,6 +74,11 @@ namespace AstroDroid.Core.UnitTests
         public void ReceiveMessage(INodeMessage message)
         {
             MyOutput = (string) message.Content;
+        }
+
+        public void SendMessage(INodeMessage message)
+        {
+            throw new NotImplementedException();
         }
     }
 

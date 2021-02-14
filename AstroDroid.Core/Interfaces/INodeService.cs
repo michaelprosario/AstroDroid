@@ -6,5 +6,6 @@ namespace AstroDroid.Core.Interfaces
         void Setup();
         void Update();
         void ReceiveMessage(INodeMessage message);
+        void SendMessage(INodeMessage message);
     }
 }
