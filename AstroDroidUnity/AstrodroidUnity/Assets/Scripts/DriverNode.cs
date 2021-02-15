@@ -20,11 +20,14 @@ public class DriverNode : MonoBehaviour, INodeService
 
     public void ReceiveMessage(INodeMessage message)
     {
-
+        Debug.Log("DriverNode got message");
+        Debug.Log("topic: " + message.Topic);
+        Debug.Log("from: " + message.Sender);
     }
 
     public void Setup()
     {
+        _MessageService.Subscribe("CheckRangeFinderResponse", this);
         for(int i=0; i<10; i++)
         {
             var driveForward = new DriveCommand { 
@@ -38,12 +41,15 @@ public class DriverNode : MonoBehaviour, INodeService
                 Angle = 45
             };
 
-            var message1 = new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward);
-            SendMessage(message1);
-            var message2 = new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand);
-            SendMessage(message2);
+            var checkRangeFinderCommand = new CheckRangeFinderCommand
+            {
+                MaxDistance = 3
+            };
+            
+            SendMessage(new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward));            
+            SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));            
+            SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
         }
-
     }
 
     void Start()
