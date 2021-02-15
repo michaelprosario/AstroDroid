@@ -6,10 +6,13 @@ using AstroDroid.Core.Entities;
 using System;
 using Zenject;
 using AstroDroid.Core.Utils;
+using AstroDroid.Core.Responses;
 
 public class DriverNode : MonoBehaviour, INodeService
 {
     public string NodeId { get; set; } = "DriverNode";
+    public bool NearSomething = false;
+    public float DistanceFromSomething = float.MaxValue;
     IMessageService _MessageService;
 
     [Inject]
@@ -23,6 +26,12 @@ public class DriverNode : MonoBehaviour, INodeService
         Debug.Log("DriverNode got message");
         Debug.Log("topic: " + message.Topic);
         Debug.Log("from: " + message.Sender);
+        if(message.Topic == "CheckRangeFinderResponse")
+        {
+            CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
+            NearSomething = response.Hit;
+            DistanceFromSomething = response.Distance;
+        }
     }
 
     public void Setup()
