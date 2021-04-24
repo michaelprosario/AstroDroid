@@ -13,7 +13,7 @@ namespace Assets.Scripts
     public class RangeFinderNode : MonoBehaviour, INodeService
     {
         public string NodeId { get; set; } = "RangeFinderNode";
-        public Collider collider;
+        public GameObject Bot;
         IMessageService _MessageService;
 
         [Inject]
@@ -36,8 +36,9 @@ namespace Assets.Scripts
             // check sensor 
             RaycastHit hit;
             Ray ray = new Ray(transform.position, transform.forward);
-            bool hitSomething = collider.Raycast(ray, out hit, checkRangeFinderCommand.MaxDistance);
-
+            
+            bool hitSomething = Bot.GetComponent<Collider>().Raycast(ray, out hit, 1000);
+            Debug.Log("hitSomething --> " + hitSomething);
             CheckRangeFinderResponse response = new CheckRangeFinderResponse
             {
                 Hit = hitSomething
@@ -45,7 +46,7 @@ namespace Assets.Scripts
 
             if (hitSomething)
             {
-                response.Distance = hit.distance;
+                response.Distance = hit.distance;                
             }
             
             SendMessage(new NodeMessage("CheckRangeFinder", "CheckRangeFinderResponse", NodeId, response));

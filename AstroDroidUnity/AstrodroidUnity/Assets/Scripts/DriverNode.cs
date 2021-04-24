@@ -47,17 +47,11 @@ public class DriverNode : MonoBehaviour, INodeService
             var turnCommand = new TurnCommand
             {
                 Direction = TurnDirection.Left,
-                Angle = 45
+                Angle = 90
             };
 
-            var checkRangeFinderCommand = new CheckRangeFinderCommand
-            {
-                MaxDistance = 3
-            };
-            
             SendMessage(new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward));            
-            SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));            
-            SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
+            SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));
         }
     }
 
@@ -66,8 +60,13 @@ public class DriverNode : MonoBehaviour, INodeService
         Setup();
     }
 
-    void INodeService.Update()
+    void Update()
     {
+        var checkRangeFinderCommand = new CheckRangeFinderCommand
+        {
+            MaxDistance = 3
+        };
+        SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
 
     }
 
@@ -81,5 +80,10 @@ public class DriverNode : MonoBehaviour, INodeService
         }
 
         _MessageService.SendMessage(message);
+    }
+
+    void INodeService.Update()
+    {
+        throw new NotImplementedException();
     }
 }

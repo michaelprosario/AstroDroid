@@ -2,6 +2,9 @@
 
 namespace AstroDroid.Core.Utils
 {
+    /// <summary>
+    /// Helper class to guard methods from invalid data
+    /// </summary>
     public class Require
     {
         public static void ObjectNotNull(object currentObject, string message)

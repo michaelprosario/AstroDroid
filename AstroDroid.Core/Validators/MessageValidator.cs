@@ -3,6 +3,9 @@ using FluentValidation;
 
 namespace AstroDroid.Core.Validators
 {
+    /// <summary>
+    /// Validates node messages
+    /// </summary>
     public class MessageValidator : AbstractValidator<INodeMessage>
     {
         public MessageValidator()

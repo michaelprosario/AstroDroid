@@ -29,8 +29,7 @@ namespace AstroDroidUnity.Assets.Scripts
         }
 
         public void ReceiveMessage(INodeMessage message)
-        {
-            Debug.Log("received message - placed into queue");
+        {            
             INodeCommand command = (INodeCommand)message.Content;
             CommandsQueue.Enqueue(command);
         }

@@ -2,6 +2,9 @@
 
 namespace AstroDroid.Core.Commands
 {
+    /// <summary>
+    /// This command enables uses to turn the robot by an angle specification
+    /// </summary>
     public class TurnCommand : INodeCommand
     {
         public TurnDirection Direction { get; set; } = TurnDirection.Left;

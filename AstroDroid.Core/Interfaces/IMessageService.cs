@@ -4,6 +4,9 @@ using AstroDroid.Core.Responses;
 
 namespace AstroDroid.Core.Interfaces
 {
+    /// <summary>
+    /// This interface represents the essential operations for passing messages between nodes
+    /// </summary>
     public interface IMessageService
     {
         List<Subscriber> Subscribers { get; set; }

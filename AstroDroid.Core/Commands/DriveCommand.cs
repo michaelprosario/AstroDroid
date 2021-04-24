@@ -2,6 +2,9 @@
 
 namespace AstroDroid.Core.Commands
 {
+    /// <summary>
+    /// Users leverage this command to drive in various directions
+    /// </summary>
     public class DriveCommand : INodeCommand
     {
         public DriveDirection Direction { get; set; } = DriveDirection.Forward;

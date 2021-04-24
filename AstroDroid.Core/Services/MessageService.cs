@@ -8,6 +8,10 @@ using AstroDroid.Core.Validators;
 
 namespace AstroDroid.Core.Services
 {
+    /// <summary>
+    /// This class represents the essential operations for passing messages between nodes.
+    /// This class represents a pub/sub protocol
+    /// </summary>
     public class MessageService : IMessageService
     {
         public List<Subscriber> Subscribers { get; set; } = new List<Subscriber>();
