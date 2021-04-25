@@ -65,14 +65,13 @@ public class DriverNode : MonoBehaviour, INodeService
 
   void ExecuteDrive()
   {
-    if (this.DistanceFromSomething > 2f || this.DistanceFromSomething == 0f)
+    if (this.DistanceFromSomething > 2f )
     {
       MoveForward(1f);
     }
     else
     {
       Turn(-180);
-      //Stop();
     }
   }
 
