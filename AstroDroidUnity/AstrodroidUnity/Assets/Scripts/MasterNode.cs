@@ -5,7 +5,7 @@ using Zenject;
 namespace AstroDroidUnity.Assets.Scripts
 {
     public class MasterNode : MonoBehaviour, INodeService
-    {
+    {     
         public string NodeId { get; set; } = "MasterNode";
         IMessageService _MessageService;
 
@@ -34,5 +34,9 @@ namespace AstroDroidUnity.Assets.Scripts
         {
 
         }
+
+        public void UpdateNode() {
+
+        }        
     }
 }

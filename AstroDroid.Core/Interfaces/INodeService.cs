@@ -10,7 +10,7 @@ namespace AstroDroid.Core.Interfaces
     {
         string NodeId { get; set; }
         void Setup();
-        void Update();
+        void UpdateNode();
         void ReceiveMessage(INodeMessage message);
         void SendMessage(INodeMessage message);
     }

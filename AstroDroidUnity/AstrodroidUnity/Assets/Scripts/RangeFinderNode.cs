@@ -66,6 +66,10 @@ namespace Assets.Scripts
             _MessageService.Subscribe("RangeFinder", this);
         }
 
+        public void UpdateNode(){
+            
+        }
+
         public void Update()
         {
             Debug.DrawRay(Bot.transform.position, Bot.transform.forward * 10f, Color.red);

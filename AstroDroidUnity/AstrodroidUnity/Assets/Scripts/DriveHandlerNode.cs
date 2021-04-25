@@ -33,8 +33,6 @@ namespace AstroDroidUnity.Assets.Scripts
             NodeId = NodeIds.DriveHandler;
         }
 
-
-
         public void ReceiveMessage(INodeMessage message)
         {            
             if(message.Topic == Topics.CheckRangeFinderResponse)
@@ -70,8 +68,7 @@ namespace AstroDroidUnity.Assets.Scripts
             _MessageService.Subscribe(Topics.CheckRangeFinderResponse, this);
         }
 
-        public void Update()
-        {
+        public void UpdateNode() {
             switch (State)
             {
                 case DriveHandlerState.NotMoving:
@@ -89,6 +86,11 @@ namespace AstroDroidUnity.Assets.Scripts
                     Debug.LogWarning("state not handled in driver handler node");
                     break;
             }
+        }
+   
+        public void Update()
+        {
+            UpdateNode();
         }
 
         private void OnMoveDone()

@@ -11,30 +11,30 @@ using Zenject;
 
 public class DriverNode : MonoBehaviour, INodeService
 {
-    public string NodeId { get; set; } = NodeIds.DriverNode;
-    public bool NearSomething = false;
-    public float DistanceFromSomething = float.MaxValue;
-    IMessageService _MessageService;
+  public string NodeId { get; set; } = NodeIds.DriverNode;
+  public bool NearSomething = false;
+  public float DistanceFromSomething = float.MaxValue;
+  IMessageService _MessageService;
 
-    [Inject]
-    public void Construct(IMessageService messageService)
+  [Inject]
+  public void Construct(IMessageService messageService)
+  {
+    _MessageService = messageService;
+  }
+
+  public void ReceiveMessage(INodeMessage message)
+  {
+    if (message.Topic == Topics.CheckRangeFinderResponse)
     {
-        _MessageService = messageService;
+      CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
+      NearSomething = response.Hit;
+      DistanceFromSomething = response.Distance;
     }
+  }
 
-    public void ReceiveMessage(INodeMessage message)
-    {
-        if(message.Topic == Topics.CheckRangeFinderResponse)
-        {
-            CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
-            NearSomething = response.Hit;
-            DistanceFromSomething = response.Distance;
-        }
-    }
-
-    public void Setup()
-    {
-        _MessageService.Subscribe(Topics.CheckRangeFinderResponse, this);
+  public void Setup()
+  {
+    _MessageService.Subscribe(Topics.CheckRangeFinderResponse, this);
   }
 
   private void Turn(int angle)
@@ -58,42 +58,46 @@ public class DriverNode : MonoBehaviour, INodeService
   }
 
   void Start()
-    {
-        Setup();
-        InvokeRepeating("ExecuteDrive", 0, 3f);
-    }
-
-    void ExecuteDrive(){
-        if(this.DistanceFromSomething > 2f || this.DistanceFromSomething == 0f){
-            MoveForward(1f);
-        }else{
-            Turn(-180);
-        }
-    }
-
-    void Update()
-    {
-        var checkRangeFinderCommand = new CheckRangeFinderCommand
-        {
-            MaxDistance = 10000
-        };
-        SendMessage(new NodeMessage(checkRangeFinderCommand.Name, Topics.RangeFinder, this.NodeId, checkRangeFinderCommand));
-    }
-
-    public void SendMessage(INodeMessage message)
-    {
-        Require.ObjectNotNull(message, nameof(INodeMessage));
-
-        if (_MessageService == null)
-        {
-            throw new Exception("MasterNode.MessageService not defined");
-        }
-
-        _MessageService.SendMessage(message);
-    }
-
-  void INodeService.Update()
   {
-    throw new NotImplementedException();
+    Setup();
+    InvokeRepeating("ExecuteDrive", 0, 3f);
   }
+
+  void ExecuteDrive()
+  {
+    if (this.DistanceFromSomething > 2f || this.DistanceFromSomething == 0f)
+    {
+      MoveForward(1f);
+    }
+    else
+    {
+      Turn(-180);
+    }
+  }
+
+  public void Update()
+  {
+    UpdateNode();
+  }
+
+  public void UpdateNode(){
+    var checkRangeFinderCommand = new CheckRangeFinderCommand
+    {
+      MaxDistance = 10000
+    };
+    SendMessage(new NodeMessage(checkRangeFinderCommand.Name, Topics.RangeFinder, this.NodeId, checkRangeFinderCommand));
+  }
+
+  public void SendMessage(INodeMessage message)
+  {
+    Require.ObjectNotNull(message, nameof(INodeMessage));
+
+    if (_MessageService == null)
+    {
+      throw new Exception("MasterNode.MessageService not defined");
+    }
+
+    _MessageService.SendMessage(message);
+  }
+
 }

@@ -31,7 +31,7 @@ namespace AstroDroid.Core.UnitTests
             NodeId = "Sender";
         }
 
-        public void Update()
+        public void UpdateNode()
         {
         }
 
@@ -67,7 +67,7 @@ namespace AstroDroid.Core.UnitTests
             _messageService.Subscribe("Test", this);
         }
 
-        public void Update()
+        public void UpdateNode()
         {
         }
 
