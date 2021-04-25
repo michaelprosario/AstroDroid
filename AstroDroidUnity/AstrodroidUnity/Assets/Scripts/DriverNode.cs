@@ -72,7 +72,14 @@ public class DriverNode : MonoBehaviour, INodeService
     else
     {
       Turn(-180);
+      //Stop();
     }
+  }
+
+  private void Stop()
+  {
+    var command = new StopCommand();
+    SendMessage(new NodeMessage(command.Name, "Driving", this.NodeId, command));
   }
 
   public void Update()
