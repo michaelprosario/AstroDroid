@@ -34,27 +34,40 @@ public class DriverNode : MonoBehaviour, INodeService
     public void Setup()
     {
         _MessageService.Subscribe("CheckRangeFinderResponse", this);
-        for(int i=0; i<10; i++)
-        {
-            var driveForward = new DriveCommand { 
-                Direction = DriveDirection.Forward, 
-                DistanceInMeters = 2f 
-            };
+  }
 
-            var turnCommand = new TurnCommand
-            {
-                Direction = TurnDirection.Left,
-                Angle = 90
-            };
+  private void Turn(int angle)
+  {
+    var turnCommand = new TurnCommand
+    {
+      Direction = TurnDirection.Left,
+      Angle = angle
+    };
+    SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));
+  }
 
-            SendMessage(new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward));            
-            SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));
-        }
-    }
+  private void MoveForward(float distance)
+  {
+    var driveForward = new DriveCommand
+    {
+      Direction = DriveDirection.Forward,
+      DistanceInMeters = distance
+    };
+    SendMessage(new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward));
+  }
 
-    void Start()
+  void Start()
     {
         Setup();
+        InvokeRepeating("ExecuteDrive", 0, 3f);
+    }
+
+    void ExecuteDrive(){
+        if(this.DistanceFromSomething > 2f || this.DistanceFromSomething == 0f){
+            MoveForward(1f);
+        }else{
+            Turn(-180);
+        }
     }
 
     void Update()
@@ -64,6 +77,7 @@ public class DriverNode : MonoBehaviour, INodeService
             MaxDistance = 10000
         };
         SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
+
 
     }
 
@@ -79,8 +93,8 @@ public class DriverNode : MonoBehaviour, INodeService
         _MessageService.SendMessage(message);
     }
 
-    void INodeService.Update()
-    {
-        throw new NotImplementedException();
-    }
+  void INodeService.Update()
+  {
+    throw new NotImplementedException();
+  }
 }
