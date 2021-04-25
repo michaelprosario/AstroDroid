@@ -1,16 +1,17 @@
-using UnityEngine;
-using AstroDroid.Core.Interfaces;
-using AstroDroid.Core.Commands;
 using AstroDroid.Core;
+using AstroDroid.Core.Commands;
 using AstroDroid.Core.Entities;
-using System;
-using Zenject;
-using AstroDroid.Core.Utils;
+using AstroDroid.Core.Interfaces;
 using AstroDroid.Core.Responses;
+using AstroDroid.Core.Utils;
+using AstrodroidUnity.Assets.Scripts;
+using System;
+using UnityEngine;
+using Zenject;
 
 public class DriverNode : MonoBehaviour, INodeService
 {
-    public string NodeId { get; set; } = "DriverNode";
+    public string NodeId { get; set; } = NodeIds.DriverNode;
     public bool NearSomething = false;
     public float DistanceFromSomething = float.MaxValue;
     IMessageService _MessageService;
@@ -23,7 +24,7 @@ public class DriverNode : MonoBehaviour, INodeService
 
     public void ReceiveMessage(INodeMessage message)
     {
-        if(message.Topic == "CheckRangeFinderResponse")
+        if(message.Topic == Topics.CheckRangeFinderResponse)
         {
             CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
             NearSomething = response.Hit;
@@ -33,7 +34,7 @@ public class DriverNode : MonoBehaviour, INodeService
 
     public void Setup()
     {
-        _MessageService.Subscribe("CheckRangeFinderResponse", this);
+        _MessageService.Subscribe(Topics.CheckRangeFinderResponse, this);
   }
 
   private void Turn(int angle)
@@ -43,7 +44,7 @@ public class DriverNode : MonoBehaviour, INodeService
       Direction = TurnDirection.Left,
       Angle = angle
     };
-    SendMessage(new NodeMessage(turnCommand.Name, "Driving", this.NodeId, turnCommand));
+    SendMessage(new NodeMessage(turnCommand.Name, Topics.Driving, this.NodeId, turnCommand));
   }
 
   private void MoveForward(float distance)
@@ -76,7 +77,7 @@ public class DriverNode : MonoBehaviour, INodeService
         {
             MaxDistance = 10000
         };
-        SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
+        SendMessage(new NodeMessage(checkRangeFinderCommand.Name, Topics.RangeFinder, this.NodeId, checkRangeFinderCommand));
     }
 
     public void SendMessage(INodeMessage message)

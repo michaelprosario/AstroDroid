@@ -1,6 +1,7 @@
 using AstroDroid.Core.Commands;
 using AstroDroid.Core.Interfaces;
 using AstroDroid.Core.Responses;
+using AstrodroidUnity.Assets.Scripts;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -29,14 +30,14 @@ namespace AstroDroidUnity.Assets.Scripts
         public void Construct(IMessageService messageService)
         {
             _MessageService = messageService;
-            NodeId = "DriveHandler";
+            NodeId = NodeIds.DriveHandler;
         }
 
 
 
         public void ReceiveMessage(INodeMessage message)
         {            
-            if(message.Topic == "CheckRangeFinderResponse")
+            if(message.Topic == Topics.CheckRangeFinderResponse)
             {
                 CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
                 NearSomething = response.Hit;
@@ -65,8 +66,8 @@ namespace AstroDroidUnity.Assets.Scripts
                 throw new Exception("MasterNode.MessageService not defined");
             }
 
-            _MessageService.Subscribe("Driving", this);
-            _MessageService.Subscribe("CheckRangeFinderResponse", this);
+            _MessageService.Subscribe(Topics.Driving, this);
+            _MessageService.Subscribe(Topics.CheckRangeFinderResponse, this);
         }
 
         public void Update()
