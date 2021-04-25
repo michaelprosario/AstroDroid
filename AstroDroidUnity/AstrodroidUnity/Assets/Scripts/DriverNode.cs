@@ -77,8 +77,6 @@ public class DriverNode : MonoBehaviour, INodeService
             MaxDistance = 10000
         };
         SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
-
-
     }
 
     public void SendMessage(INodeMessage message)

@@ -1,10 +1,11 @@
+using AstroDroid.Core.Commands;
 using AstroDroid.Core.Interfaces;
+using AstroDroid.Core.Responses;
+using DG.Tweening;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using System.Collections.Generic;
-using AstroDroid.Core.Commands;
-using DG.Tweening;
 
 namespace AstroDroidUnity.Assets.Scripts
 {
@@ -16,6 +17,9 @@ namespace AstroDroidUnity.Assets.Scripts
     public class DriveHandlerNode : MonoBehaviour, INodeService
     {
         public string NodeId { get; set; }
+        public bool NearSomething { get; set; }
+        public float DistanceFromSomething { get; set; }
+
         IMessageService _MessageService;
         public DriveHandlerState State = new DriveHandlerState();
         Queue<INodeCommand> CommandsQueue = new Queue<INodeCommand>();
@@ -28,10 +32,20 @@ namespace AstroDroidUnity.Assets.Scripts
             NodeId = "DriveHandler";
         }
 
+
+
         public void ReceiveMessage(INodeMessage message)
         {            
-            INodeCommand command = (INodeCommand)message.Content;
-            CommandsQueue.Enqueue(command);
+            if(message.Topic == "CheckRangeFinderResponse")
+            {
+                CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
+                NearSomething = response.Hit;
+                DistanceFromSomething = response.Distance;
+            }else{
+                INodeCommand command = (INodeCommand)message.Content;
+                CommandsQueue.Enqueue(command);
+
+            }
         }
 
         public void SendMessage(INodeMessage message)
@@ -52,6 +66,7 @@ namespace AstroDroidUnity.Assets.Scripts
             }
 
             _MessageService.Subscribe("Driving", this);
+            _MessageService.Subscribe("CheckRangeFinderResponse", this);
         }
 
         public void Update()
@@ -113,10 +128,16 @@ namespace AstroDroidUnity.Assets.Scripts
 
         private void OnDriveCommand()
         {
+
+
             State = DriveHandlerState.Moving;
             var driveCommand = (DriveCommand)currentNodeCommand;
             if (driveCommand.Direction == AstroDroid.Core.DriveDirection.Forward)
             {
+                if(NearSomething && DistanceFromSomething < 2){
+                    return;
+                }
+                                
                 Vector3 end = this.gameObject.transform.TransformPoint(Vector3.forward * driveCommand.DistanceInMeters);
                 transform.DOMove(end, 3).SetEase(Ease.OutQuint).OnComplete(handleMoveCompleted);
             }
