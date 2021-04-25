@@ -23,9 +23,6 @@ public class DriverNode : MonoBehaviour, INodeService
 
     public void ReceiveMessage(INodeMessage message)
     {
-        Debug.Log("DriverNode got message");
-        Debug.Log("topic: " + message.Topic);
-        Debug.Log("from: " + message.Sender);
         if(message.Topic == "CheckRangeFinderResponse")
         {
             CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
@@ -64,7 +61,7 @@ public class DriverNode : MonoBehaviour, INodeService
     {
         var checkRangeFinderCommand = new CheckRangeFinderCommand
         {
-            MaxDistance = 3
+            MaxDistance = 10000
         };
         SendMessage(new NodeMessage(checkRangeFinderCommand.Name, "RangeFinder", this.NodeId, checkRangeFinderCommand));
 

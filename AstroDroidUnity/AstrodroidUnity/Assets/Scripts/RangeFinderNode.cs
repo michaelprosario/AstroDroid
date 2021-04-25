@@ -25,20 +25,13 @@ namespace Assets.Scripts
 
         public void ReceiveMessage(INodeMessage message)
         {            
-            Debug.Log("RangeFinderNode");
-            Debug.Log("ReceiveMessage(INodeMessage message) -------------- ");
-            Debug.Log("topic " + message.Topic);
-            Debug.Log("sender " + message.Sender);
-
-
             CheckRangeFinderCommand checkRangeFinderCommand = (CheckRangeFinderCommand)message.Content;
 
-            // check sensor 
             RaycastHit hit;
-            Ray ray = new Ray(transform.position, transform.forward);
+            Ray ray = new Ray(Bot.transform.position, Bot.transform.forward);
             
-            bool hitSomething = Bot.GetComponent<Collider>().Raycast(ray, out hit, 1000);
-            Debug.Log("hitSomething --> " + hitSomething);
+            
+            bool hitSomething = Physics.Raycast(ray, out hit, checkRangeFinderCommand.MaxDistance);
             CheckRangeFinderResponse response = new CheckRangeFinderResponse
             {
                 Hit = hitSomething
@@ -75,7 +68,7 @@ namespace Assets.Scripts
 
         public void Update()
         {
-
+            Debug.DrawRay(Bot.transform.position, Bot.transform.forward * 10f, Color.red);
         }
     }
 }
