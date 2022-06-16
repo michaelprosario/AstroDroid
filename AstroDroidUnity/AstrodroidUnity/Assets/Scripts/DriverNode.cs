@@ -5,10 +5,12 @@ using AstroDroid.Core.Interfaces;
 using AstroDroid.Core.Responses;
 using AstroDroid.Core.Utils;
 using AstrodroidUnity.Assets.Scripts;
-using System;
 using UnityEngine;
 using Zenject;
 
+/// <summary>
+/// Drive Node controls a single robot
+/// </summary>
 public class DriverNode : MonoBehaviour, INodeService
 {
   public string NodeId { get; set; } = NodeIds.DriverNode;
@@ -26,9 +28,13 @@ public class DriverNode : MonoBehaviour, INodeService
   {
     if (message.Topic == Topics.CheckRangeFinderResponse)
     {
-      CheckRangeFinderResponse response = (CheckRangeFinderResponse)message.Content;
+      var response = (CheckRangeFinderResponse)message.Content;
       NearSomething = response.Hit;
       DistanceFromSomething = response.Distance;
+      if(DistanceFromSomething > 2f)
+      {
+        this.NearSomething = false;
+      }
     }
   }
 
@@ -54,7 +60,7 @@ public class DriverNode : MonoBehaviour, INodeService
       Direction = DriveDirection.Forward,
       DistanceInMeters = distance
     };
-    SendMessage(new NodeMessage(driveForward.Name, "Driving", this.NodeId, driveForward));
+    SendMessage(new NodeMessage(driveForward.Name, Topics.Driving, this.NodeId, driveForward));
   }
 
   void Start()
@@ -65,9 +71,9 @@ public class DriverNode : MonoBehaviour, INodeService
 
   void ExecuteDrive()
   {
-    if (this.DistanceFromSomething > 2f )
+    if (this.DistanceFromSomething > 2f)
     {
-      MoveForward(1f);
+      MoveForward(1f);      
     }
     else
     {
@@ -78,7 +84,7 @@ public class DriverNode : MonoBehaviour, INodeService
   private void Stop()
   {
     var command = new StopCommand();
-    SendMessage(new NodeMessage(command.Name, "Driving", this.NodeId, command));
+    SendMessage(new NodeMessage(command.Name, Topics.Driving, this.NodeId, command));
   }
 
   public void Update()
@@ -86,7 +92,8 @@ public class DriverNode : MonoBehaviour, INodeService
     UpdateNode();
   }
 
-  public void UpdateNode(){
+  public void UpdateNode()
+  {
     var checkRangeFinderCommand = new CheckRangeFinderCommand
     {
       MaxDistance = 10000
@@ -97,11 +104,7 @@ public class DriverNode : MonoBehaviour, INodeService
   public void SendMessage(INodeMessage message)
   {
     Require.ObjectNotNull(message, nameof(INodeMessage));
-
-    if (_MessageService == null)
-    {
-      throw new Exception("MasterNode.MessageService not defined");
-    }
+    Require.ObjectNotNull(_MessageService, nameof(IMessageService));
 
     _MessageService.SendMessage(message);
   }

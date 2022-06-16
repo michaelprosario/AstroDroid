@@ -103,15 +103,15 @@ namespace AstroDroidUnity.Assets.Scripts
 
     private void OnNeedMove()
     {
-      if (currentNodeCommand.Name == "DriveCommand")
+      if (currentNodeCommand.Name == Commands.DriveCommand)
       {
         OnDriveCommand();
       }
-      else if (currentNodeCommand.Name == "TurnCommand")
+      else if (currentNodeCommand.Name == Commands.TurnCommand)
       {
         OnTurnCommand();
       }
-      else if (currentNodeCommand.Name == "StopCommand")
+      else if (currentNodeCommand.Name == Commands.StopCommand)
       {
         OnStopCommand();
       }
@@ -143,8 +143,6 @@ namespace AstroDroidUnity.Assets.Scripts
 
     private void OnDriveCommand()
     {
-
-
       State = DriveHandlerState.Moving;
       var driveCommand = (DriveCommand)currentNodeCommand;
       if (driveCommand.Direction == AstroDroid.Core.DriveDirection.Forward)

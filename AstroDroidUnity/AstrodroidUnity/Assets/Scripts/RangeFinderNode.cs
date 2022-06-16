@@ -39,7 +39,7 @@ namespace Assets.Scripts
 
             if (hitSomething)
             {
-                response.Distance = hit.distance;                
+                response.Distance = hit.distance;  
             }
             
             SendMessage(new NodeMessage("CheckRangeFinder", "CheckRangeFinderResponse", NodeId, response));
