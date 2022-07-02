@@ -1,0 +1,128 @@
+
+Blockly.Blocks['fwd'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("blocks")
+          .setCheck("Number")
+          .appendField("fwd blocks=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['fwd'] = function (block) {
+  var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.forward(" + value_blocks + ");\n";
+  return code;
+};
+
+Blockly.Blocks['turn'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("blocks")
+          .setCheck("Number")
+          .appendField("turn blocks=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['turn'] = function (block) {
+  var angle = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.turn(" + angle + ");\n";
+  return code;
+};
+
+
+Blockly.Blocks['left'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("blocks")
+          .setCheck("Number")
+          .appendField("left blocks=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['left'] = function (block) {
+  var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.moveLeft(" + value_blocks + ");\n";
+  return code;
+};
+
+
+Blockly.Blocks['right'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("blocks")
+          .setCheck("Number")
+          .appendField("right blocks=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['right'] = function (block) {
+  var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.moveRight(" + value_blocks + ");\n";
+  return code;
+};
+
+
+
+
+Blockly.Blocks['chkpt'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("title")
+          .setCheck("String")
+          .appendField("checkPoint title=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['chkpt'] = function (block) {
+  var value_title = Blockly.JavaScript.valueToCode(block, 'title', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.saveLocation(" + value_title + ");\n";
+  return code;
+};
+
+
+
+Blockly.Blocks['move'] = {
+  init: function () {
+      this.setHelpUrl('http://www.example.com/');
+      this.appendValueInput("title")
+          .setCheck("String")
+          .appendField("moveToCheckPoint title=");
+      this.setInputsInline(true);
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip('');
+  }
+};
+
+Blockly.JavaScript['move'] = function (block) {
+  var value_title = Blockly.JavaScript.valueToCode(block, 'title', Blockly.JavaScript.ORDER_ATOMIC);
+
+  var code = "bot.moveToLocation(" + value_title + ");\n";
+  return code;
+};
+
