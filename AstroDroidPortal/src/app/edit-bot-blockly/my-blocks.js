@@ -4,7 +4,7 @@ Blockly.Blocks['fwd'] = {
       this.setHelpUrl('http://www.example.com/');
       this.appendValueInput("blocks")
           .setCheck("Number")
-          .appendField("fwd blocks=");
+          .appendField("fwd angle=");
       this.setInputsInline(true);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
@@ -22,9 +22,9 @@ Blockly.JavaScript['fwd'] = function (block) {
 Blockly.Blocks['turn'] = {
   init: function () {
       this.setHelpUrl('http://www.example.com/');
-      this.appendValueInput("blocks")
+      this.appendValueInput("angle")
           .setCheck("Number")
-          .appendField("turn blocks=");
+          .appendField("turn angle=");
       this.setInputsInline(true);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
@@ -33,7 +33,7 @@ Blockly.Blocks['turn'] = {
 };
 
 Blockly.JavaScript['turn'] = function (block) {
-  var angle = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+  var angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
   var code = "bot.turn(" + angle + ");\n";
   return code;
@@ -43,9 +43,9 @@ Blockly.JavaScript['turn'] = function (block) {
 Blockly.Blocks['left'] = {
   init: function () {
       this.setHelpUrl('http://www.example.com/');
-      this.appendValueInput("blocks")
+      this.appendValueInput("angle")
           .setCheck("Number")
-          .appendField("left blocks=");
+          .appendField("left angle=");
       this.setInputsInline(true);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
@@ -54,9 +54,9 @@ Blockly.Blocks['left'] = {
 };
 
 Blockly.JavaScript['left'] = function (block) {
-  var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.moveLeft(" + value_blocks + ");\n";
+  var code = "bot.moveLeft(" + value_angle + ");\n";
   return code;
 };
 
@@ -64,9 +64,9 @@ Blockly.JavaScript['left'] = function (block) {
 Blockly.Blocks['right'] = {
   init: function () {
       this.setHelpUrl('http://www.example.com/');
-      this.appendValueInput("blocks")
+      this.appendValueInput("angle")
           .setCheck("Number")
-          .appendField("right blocks=");
+          .appendField("right angle=");
       this.setInputsInline(true);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
@@ -75,9 +75,9 @@ Blockly.Blocks['right'] = {
 };
 
 Blockly.JavaScript['right'] = function (block) {
-  var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.moveRight(" + value_blocks + ");\n";
+  var code = "bot.moveRight(" + value_angle + ");\n";
   return code;
 };
 
