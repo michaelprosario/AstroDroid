@@ -15,7 +15,7 @@ Blockly.Blocks['fwd'] = {
 Blockly.JavaScript['fwd'] = function (block) {
   var value_blocks = Blockly.JavaScript.valueToCode(block, 'blocks', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.forward(" + value_blocks + ");\n";
+  var code = "moveForward(" + value_blocks + ");\n";
   return code;
 };
 
@@ -35,7 +35,7 @@ Blockly.Blocks['turn'] = {
 Blockly.JavaScript['turn'] = function (block) {
   var angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.turn(" + angle + ");\n";
+  var code = "turn(" + angle + ");\n";
   return code;
 };
 
@@ -56,7 +56,7 @@ Blockly.Blocks['left'] = {
 Blockly.JavaScript['left'] = function (block) {
   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.moveLeft(" + value_angle + ");\n";
+  var code = "moveLeft(" + value_angle + ");\n";
   return code;
 };
 
@@ -77,7 +77,7 @@ Blockly.Blocks['right'] = {
 Blockly.JavaScript['right'] = function (block) {
   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.moveRight(" + value_angle + ");\n";
+  var code = "moveRight(" + value_angle + ");\n";
   return code;
 };
 
@@ -100,7 +100,7 @@ Blockly.Blocks['chkpt'] = {
 Blockly.JavaScript['chkpt'] = function (block) {
   var value_title = Blockly.JavaScript.valueToCode(block, 'title', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.saveLocation(" + value_title + ");\n";
+  var code = "saveLocation(" + value_title + ");\n";
   return code;
 };
 
@@ -122,7 +122,7 @@ Blockly.Blocks['move'] = {
 Blockly.JavaScript['move'] = function (block) {
   var value_title = Blockly.JavaScript.valueToCode(block, 'title', Blockly.JavaScript.ORDER_ATOMIC);
 
-  var code = "bot.moveToLocation(" + value_title + ");\n";
+  var code = "moveToLocation(" + value_title + ");\n";
   return code;
 };
 
