@@ -4,7 +4,7 @@ Blockly.Blocks['fwd'] = {
       this.setHelpUrl('http://www.example.com/');
       this.appendValueInput("blocks")
           .setCheck("Number")
-          .appendField("fwd angle=");
+          .appendField("fwd units=");
       this.setInputsInline(true);
       this.setPreviousStatement(true);
       this.setNextStatement(true);
