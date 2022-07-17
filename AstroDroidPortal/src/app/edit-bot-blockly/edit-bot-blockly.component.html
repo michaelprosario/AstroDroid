@@ -1,8 +1,9 @@
-
-
-<button (click)="executeCode()">Run Code</button>
-
 <div id="divBlockly"></div>
+
+<div id="divCanvas">
+  <button (click)="executeCode()">Run Code</button>
+  <canvas id="botCanvas" width="800" height="300"></canvas>
+</div>
 
 <xml id="xmlToolBox" style="display: none">
   <category name="Move Bot">
@@ -10,7 +11,7 @@
     <block type="fwd">
       <value name="blocks">
         <block type="math_number">
-          <field name="NUM">1</field>
+          <field name="NUM">500</field>
         </block>
       </value>
     </block>
@@ -111,4 +112,4 @@
   <category name="Variables" custom="VARIABLE"></category>
   <category name="Functions" custom="PROCEDURE"></category>
 </xml>
-<canvas id="botCanvas" width="800" height="300"></canvas>
+

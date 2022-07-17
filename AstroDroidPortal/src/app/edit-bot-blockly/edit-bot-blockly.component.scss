@@ -1,6 +1,13 @@
 #divBlockly {
-  height: 50%;
+  height: 250px;
   width: 100%;
   position: absolute;
-  top: 100;
+  top: 0;
+}
+
+#divCanvas {
+  height: 500px;
+  width: 100%;
+  position: absolute;
+  top: 270px;
 }
